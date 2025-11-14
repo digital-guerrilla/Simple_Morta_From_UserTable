@@ -36,8 +36,10 @@ def invite():
         return jsonify({"error": "Email is required"}), 400
     try:
         invite_user(email, project_id)
+        print(f"Invitation sent to {email}")
         return jsonify({"message": f"Invitation sent to {email}"}), 200
     except requests.HTTPError as e:
+        print(f"Error sending invitation: {e}")
         return jsonify({"error": str(e)}), 500
 
 if __name__ == "__main__":
