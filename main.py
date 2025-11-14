@@ -28,8 +28,7 @@ def invite():
     
     # Extract email from the new webhook payload structure
     email = ""
-    context = data.get("context", {})
-    cells = context.get("cells", [])
+    cells = data.get("context", {}).get("cells", [])
     if cells:
         row_data = cells[0].get("row", {}).get("rowData", {})
         email = row_data.get("Email", "")
