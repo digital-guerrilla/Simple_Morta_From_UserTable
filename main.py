@@ -25,7 +25,14 @@ def invite():
     data = request.get_json()
     print(data)
     project_id = data.get("project_Id") or data.get("contextProjectId")
-    email = data.get("rowData", {}).get("Email", "")
+    
+    # Extract email from the new webhook payload structure
+    email = ""
+    context = data.get("context", {})
+    cells = context.get("cells", [])
+    if cells:
+        row_data = cells[0].get("row", {}).get("rowData", {})
+        email = row_data.get("Email", "")
     if not email:
         return jsonify({"error": "Email is required"}), 400
     try:
