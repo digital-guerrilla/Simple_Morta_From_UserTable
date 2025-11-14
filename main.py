@@ -5,7 +5,6 @@ from dotenv import load_dotenv
 load_dotenv(override=True)
 
 API_KEY: str = str(os.getenv("API_KEY", default=""))
-MORTA_API_BASE: str = "https://api.morta.io/v1"
 HEADERS: dict = {
         "Content-Type": "application/json",
         "Accept": "application/json",
@@ -13,7 +12,7 @@ HEADERS: dict = {
     }
 
 def invite_user(email: str, project_id: str) -> None:
-    with requests.request("POST", f"https://api.morta.io/v1/project/{project_id}/invite", json={"email": email}) as response:
+    with requests.request("POST", f"https://api.morta.io/v1/project/{project_id}/invite", json={"email": email, }, headers=HEADERS) as response:
         response.raise_for_status()
         return None
 
@@ -23,7 +22,6 @@ app = Flask(__name__)
 def invite():
     print("Received invite request")
     data = request.get_json()
-    print(data)
     project_id = data.get("project_Id") or data.get("contextProjectId")
     
     # Extract email from the new webhook payload structure
