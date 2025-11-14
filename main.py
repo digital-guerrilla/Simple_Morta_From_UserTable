@@ -21,7 +21,9 @@ app = Flask(__name__)
 
 @app.route("/invite", methods=["POST"])
 def invite():
+    print("Received invite request")
     data = request.get_json()
+    print(data)
     project_id = data.get("project_Id") or data.get("contextProjectId")
     email = data.get("rowData", {}).get("Email", "")
     if not email:
